@@ -1,9 +1,7 @@
-# BBN SMS - Java API 1.0
-========================
+# BBN SMS Gateway Java SDK for HTTP API (version 1.0)
+=====================================================
 
-BBN SMS - Java API 1.0 is the first Java port to the BBN (http://www.bbnplace.com) Network SMS API.
-It allows Java developers the ability to interface with the BBN SMS API with ease, without having to write long lines of code to do the same from project to project.
-Java developers can easily adopt the library into any project that needs to send SMS using the BBN SMS service.
+BBN SMS Gateway Java SDK for HTTP API (version 1.0) is the first Java port to the BBN SMS Gateway HTTP API. Java developers can now interface with the BBN SMS Gateway API with ease - not having to write long lines of code to do same from project to project. Java developers can easily adopt the library into any project that needs to send sms using the BBN SMS Gateway
 
 # Configuration
 
