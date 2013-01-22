@@ -182,7 +182,8 @@ public final class BbnApi {
 
     // Make the HTTP GET request.
     final String response = requestHttp.get();
-    final boolean valid = Boolean.parseBoolean(response);
+    final boolean valid = Boolean.parseBoolean(
+            response != null ? response.trim() : "false");
     return new Result(valid).setMessage(response).setError(!valid);
   }
 
@@ -253,7 +254,8 @@ public final class BbnApi {
 
     // We use POST requests to help the user prevent failure due to too long URLs.
     final String result = requestHttp.post();
-    return new Result(result).setError(
+
+    return new Result(result != null ? result.trim() : "").setError(
             !result.contains(String.valueOf(BBN.ResponseCode.MESSAGE_SENT.getCode())));
   }
 
@@ -295,7 +297,7 @@ public final class BbnApi {
 
     // We use POST requests to help the user prevent failure due to too long URLs.
     final String result = requestHttp.post();
-    return new Result(result).setError(
+    return new Result(result != null ? result.trim() : "").setError(
             !result.contains(String.valueOf(BBN.ResponseCode.MESSAGE_SENT.getCode())));
   }
 
@@ -346,7 +348,7 @@ public final class BbnApi {
 
     // We use POST requests to help the user prevent failure due to too long URLs.
     final String result = requestHttp.post();
-    return new Result(result).setError(
+    return new Result(result != null ? result.trim() : "").setError(
             !result.contains(String.valueOf(BBN.ResponseCode.SCHEDULE_SAVED.getCode())));
   }
 

@@ -55,7 +55,7 @@ public class BbnApiTest {
   public void testDefaultInstance() {
     System.out.println("defaultInstance");
     BbnApi result = BbnApi.defaultInstance();
-    assertNull(result);
+    assertNotNull(result);
   }
 
   /**
@@ -104,6 +104,13 @@ public class BbnApiTest {
     BbnApi api = BbnApi.getInstance();
     Result<Boolean> result = api.login(username, password);
     assertEquals(false, result.getValue());
+
+    username = "blessingkalu@gmail.com";
+    password = "finalmission20";
+    result = api.login(username, password);
+    System.out.println("Found: " + result.getMessage());
+    System.out.println("\"" + result.getMessage() + "\"");
+    assertEquals(true, result.getValue());
   }
 
   /**
@@ -113,7 +120,10 @@ public class BbnApiTest {
   public void testCheckBalance() throws Exception {
     System.out.println("checkBalance");
     BbnApi api = BbnApi.getInstance();
-    Result<Float> result = api.checkBalance();
+    String username = "blessingkalu@gmail.com";
+    String password = "finalmission20";
+    Result<Float> result = api.checkBalance(username, password);
+    System.out.println(result.getValue());
     assertNull(result.getValue());
   }
 
@@ -128,7 +138,10 @@ public class BbnApiTest {
     sms.setSender("victor");
     sms.setMobile("+2347031234567");
     BbnApi api = BbnApi.getInstance();
+    api.setUsername("blessingkalu@gmail.com");
+    api.setPassword("finalmission20");
     Result result = api.sendMessage(sms);
+    System.out.println("Message sent: " + result.getValue());
     assertTrue(result.isError());
   }
 

@@ -169,7 +169,7 @@ public class Http {
     requestWriter.flush();
 
     // Stores the content of the HTTP response.
-    StringWriter result = null;
+    StringWriter result = new StringWriter();
     // Writes the result.
     PrintWriter writer = null;
     // Reader to read the content of the HTTP response.
@@ -188,9 +188,13 @@ public class Http {
 
         if (writer == null) {
           // Initialize the writer.
-          writer = new PrintWriter(result = new StringWriter());
+          writer = new PrintWriter(result);
         }
         writer.println(line);
+      }
+
+      if (writer != null) {
+        writer.flush();
       }
     } finally {
 
