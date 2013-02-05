@@ -330,6 +330,7 @@ public final class BbnApi {
   public Result<String> scheduleMessage(
           final SmsGroup smsGroup,
           final String scheduleName,
+          final boolean notify,
           final String username,
           final String password) throws MalformedURLException, IOException {
     Http requestHttp = new Http(BBN.Resource.SCHEDULE_SMS_URL());
@@ -339,7 +340,7 @@ public final class BbnApi {
     requestHttp.addParam(BBN.Params.MESSAGE, smsGroup.getMessage());
     requestHttp.addParam(BBN.Params.MOBILE, smsGroup.getMobileListCommaSeparated());
     requestHttp.addParam(BBN.Params.SCHEDULE, "1");
-    requestHttp.addParam(BBN.Params.SCHEDULE_NOTIFY, String.valueOf("0"));
+    requestHttp.addParam(BBN.Params.SCHEDULE_NOTIFY, notify ? "1" : "0");
     requestHttp.addParam(BBN.Params.BROADCAST_TIME, String.valueOf(new Date().getTime()));
 
     if (scheduleName != null) {
@@ -363,8 +364,10 @@ public final class BbnApi {
    */
   public Result<String> scheduleMessage(
           final SmsGroup smsGroup,
-          final String scheduleName) throws MalformedURLException, IOException {
-    return scheduleMessage(smsGroup, scheduleName,
+          final String scheduleName,
+          final boolean notify) throws MalformedURLException, IOException {
+    return scheduleMessage(
+            smsGroup, scheduleName, notify,
             getConfig(BBN.Params.USERNAME),
             getConfig(BBN.Params.PASSWORD));
   }

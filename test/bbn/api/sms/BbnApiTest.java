@@ -124,7 +124,7 @@ public class BbnApiTest {
     String password = "finalmission20";
     Result<Float> result = api.checkBalance(username, password);
     System.out.println(result.getValue());
-    assertNull(result.getValue());
+    assertNotNull(result.getValue());
   }
 
   /**
@@ -142,7 +142,7 @@ public class BbnApiTest {
     api.setPassword("finalmission20");
     Result result = api.sendMessage(sms);
     System.out.println("Message sent: " + result.getValue());
-    assertTrue(result.isError());
+    assertTrue(!result.isError());
   }
 
   /**
@@ -154,9 +154,12 @@ public class BbnApiTest {
     SmsGroup smsGroup = new SmsGroup();
     smsGroup.setMessage("This is a group message.");
     smsGroup.setSender("victor");
-    smsGroup.setMobileList(Arrays.asList(new String[]{"+2347031234567"}));
+    smsGroup.setMobileList(Arrays.asList(new String[]{"2347031234567", "2347030541644"}));
     BbnApi api = BbnApi.getInstance();
-    Result result = api.sendBatchMessage(smsGroup);
+    Result result = api.sendBatchMessage(smsGroup, "vicsstar@yahoo.com", "certified1");
+    System.out.println(result.getMessage());
+    System.out.println(result.getValue());
+    System.out.println(result.getCode());
     assertTrue(result.isError());
   }
 }
