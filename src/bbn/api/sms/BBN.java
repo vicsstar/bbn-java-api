@@ -153,6 +153,10 @@ public final class BBN {
      * @required false
      */
     public static final String SCHEDULE_NOTIFY = "schedule_notification";
+    /**
+     * Defines the base country code to use while sending a message.
+     */
+    public static final String C_CODE = "ccode";
   }
 
   /**

@@ -243,6 +243,8 @@ public final class BbnApi {
    */
   public Result<String> sendMessage(
           final SMS sms,
+          final String ccode,
+          final boolean flash,
           final String username,
           final String password) throws MalformedURLException, IOException {
     Http requestHttp = new Http(BBN.Resource.SEND_SMS_URL());
@@ -251,6 +253,8 @@ public final class BbnApi {
     requestHttp.addParam(BBN.Params.SENDER, sms.getSender());
     requestHttp.addParam(BBN.Params.MESSAGE, sms.getMessage());
     requestHttp.addParam(BBN.Params.MOBILE, sms.getMobile());
+    requestHttp.addParam(BBN.Params.C_CODE, (ccode != null ? ccode : ""));
+    requestHttp.addParam(BBN.Params.FLASH, flash ? "1" : "0");
 
     // We use POST requests to help the user prevent failure due to too long URLs.
     final String result = requestHttp.post();
@@ -267,10 +271,13 @@ public final class BbnApi {
    * @throws MalformedURLException
    * @throws IOException
    */
-  public Result<String> sendMessage(SMS sms)
+  public Result<String> sendMessage(
+          final SMS sms, final String ccode,
+          final boolean flash)
           throws MalformedURLException, IOException {
     // Delegates to the method that actually sends the SMS.
-    return sendMessage(sms, getConfig(BBN.Params.USERNAME),
+    return sendMessage(sms, ccode, flash,
+            getConfig(BBN.Params.USERNAME),
             getConfig(BBN.Params.PASSWORD));
   }
 
@@ -286,6 +293,8 @@ public final class BbnApi {
    */
   public Result<String> sendBatchMessage(
           final SmsGroup smsGroup,
+          final String ccode,
+          final boolean flash,
           final String username,
           final String password) throws MalformedURLException, IOException {
     Http requestHttp = new Http(BBN.Resource.SEND_SMS_URL());
@@ -294,6 +303,8 @@ public final class BbnApi {
     requestHttp.addParam(BBN.Params.SENDER, smsGroup.getSender());
     requestHttp.addParam(BBN.Params.MESSAGE, smsGroup.getMessage());
     requestHttp.addParam(BBN.Params.MOBILE, smsGroup.getMobileListCommaSeparated());
+    requestHttp.addParam(BBN.Params.C_CODE, (ccode != null ? ccode : ""));
+    requestHttp.addParam(BBN.Params.FLASH, flash ? "1" : "0");
 
     // We use POST requests to help the user prevent failure due to too long URLs.
     final String result = requestHttp.post();
@@ -310,9 +321,14 @@ public final class BbnApi {
    * @throws IOException If a network or I/O error occurs.
    */
   public Result<String> sendBatchMessage(
-          final SmsGroup smsGroup) throws MalformedURLException, IOException {
+          final SmsGroup smsGroup,
+          final String ccode,
+          final boolean flash)
+          throws MalformedURLException, IOException {
     // Delegates to the method that actually sends the group SMS.
-    return sendBatchMessage(smsGroup, getConfig(BBN.Params.USERNAME),
+    return sendBatchMessage(
+            smsGroup, ccode, flash,
+            getConfig(BBN.Params.USERNAME),
             getConfig(BBN.Params.PASSWORD));
   }
 
@@ -330,7 +346,10 @@ public final class BbnApi {
   public Result<String> scheduleMessage(
           final SmsGroup smsGroup,
           final String scheduleName,
+          final Date scheduleTime,
           final boolean notify,
+          final String ccode,
+          final boolean flash,
           final String username,
           final String password) throws MalformedURLException, IOException {
     Http requestHttp = new Http(BBN.Resource.SCHEDULE_SMS_URL());
@@ -341,7 +360,9 @@ public final class BbnApi {
     requestHttp.addParam(BBN.Params.MOBILE, smsGroup.getMobileListCommaSeparated());
     requestHttp.addParam(BBN.Params.SCHEDULE, "1");
     requestHttp.addParam(BBN.Params.SCHEDULE_NOTIFY, notify ? "1" : "0");
-    requestHttp.addParam(BBN.Params.BROADCAST_TIME, String.valueOf(new Date().getTime()));
+    requestHttp.addParam(BBN.Params.BROADCAST_TIME, String.valueOf(scheduleTime.getTime() / 1000));
+    requestHttp.addParam(BBN.Params.C_CODE, (ccode != null ? ccode : ""));
+    requestHttp.addParam(BBN.Params.FLASH, flash ? "1" : "0");
 
     if (scheduleName != null) {
       requestHttp.addParam(BBN.Params.SCHEDULE_NAME, scheduleName);
@@ -365,9 +386,13 @@ public final class BbnApi {
   public Result<String> scheduleMessage(
           final SmsGroup smsGroup,
           final String scheduleName,
-          final boolean notify) throws MalformedURLException, IOException {
+          final Date scheduleTime,
+          final boolean notify,
+          final String ccode,
+          final boolean flash) throws MalformedURLException, IOException {
     return scheduleMessage(
-            smsGroup, scheduleName, notify,
+            smsGroup, scheduleName, scheduleTime,
+            notify, ccode, flash,
             getConfig(BBN.Params.USERNAME),
             getConfig(BBN.Params.PASSWORD));
   }

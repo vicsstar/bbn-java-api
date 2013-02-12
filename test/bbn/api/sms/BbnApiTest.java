@@ -105,8 +105,8 @@ public class BbnApiTest {
     Result<Boolean> result = api.login(username, password);
     assertEquals(false, result.getValue());
 
-    username = "blessingkalu@gmail.com";
-    password = "finalmission20";
+    username = "some_email@email.com";
+    password = "some_password";
     result = api.login(username, password);
     System.out.println("Found: " + result.getMessage());
     System.out.println("\"" + result.getMessage() + "\"");
@@ -120,8 +120,8 @@ public class BbnApiTest {
   public void testCheckBalance() throws Exception {
     System.out.println("checkBalance");
     BbnApi api = BbnApi.getInstance();
-    String username = "blessingkalu@gmail.com";
-    String password = "finalmission20";
+    String username = "some_email@email.com";
+    String password = "some_password";
     Result<Float> result = api.checkBalance(username, password);
     System.out.println(result.getValue());
     assertNotNull(result.getValue());
@@ -138,9 +138,9 @@ public class BbnApiTest {
     sms.setSender("victor");
     sms.setMobile("+2347031234567");
     BbnApi api = BbnApi.getInstance();
-    api.setUsername("blessingkalu@gmail.com");
-    api.setPassword("finalmission20");
-    Result result = api.sendMessage(sms);
+    api.setUsername("some_email@email.com");
+    api.setPassword("some_password");
+    Result result = api.sendMessage(sms, null, false);
     System.out.println("Message sent: " + result.getValue());
     assertTrue(!result.isError());
   }
@@ -156,10 +156,30 @@ public class BbnApiTest {
     smsGroup.setSender("victor");
     smsGroup.setMobileList(Arrays.asList(new String[]{"2347031234567", "2347030541644"}));
     BbnApi api = BbnApi.getInstance();
-    Result result = api.sendBatchMessage(smsGroup, "vicsstar@yahoo.com", "certified1");
+    Result result = api.sendBatchMessage(smsGroup,
+            null, false, "some_email@email.com", "some_password");
     System.out.println(result.getMessage());
     System.out.println(result.getValue());
     System.out.println(result.getCode());
     assertTrue(result.isError());
+  }
+
+  /**
+   * Test of scheduleMessage method, of class BbnApi.
+   */
+  @Test
+  public void testScheduleMessage() throws Exception {
+    System.out.println("scheduleMessage");
+    SmsGroup smsGroup = new SmsGroup();
+    smsGroup.setMessage("This is a scheduled message.");
+    smsGroup.setSender("victor");
+    smsGroup.setMobileList(Arrays.asList(new String[]{"2347031234567", "2347030541644"}));
+    BbnApi api = BbnApi.getInstance();
+    Result result = api.scheduleMessage(smsGroup, "scheduled_msg", new java.util.Date(),
+            true, null, false, "some_email@email.com", "some_password");
+    System.out.println(result.getMessage());
+    System.out.println(result.getValue());
+    System.out.println(result.getCode());
+    assertTrue(!result.isError());
   }
 }
