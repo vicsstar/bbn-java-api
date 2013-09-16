@@ -139,7 +139,7 @@ public class Http {
     }
 
     // return the content of the HTTP response, if any.
-    return result.getBuffer().toString();
+    return (result != null) ? result.getBuffer().toString() : null;
   }
 
   /**

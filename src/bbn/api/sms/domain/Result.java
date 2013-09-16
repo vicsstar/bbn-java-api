@@ -1,7 +1,6 @@
 package bbn.api.sms.domain;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 /**
  * Holds the result of an HTTP request on the BBN network.

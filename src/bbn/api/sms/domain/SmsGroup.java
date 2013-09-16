@@ -13,7 +13,7 @@ public class SmsGroup implements Serializable {
 
   private static final long serialVersionUID = 1L;
   private String sender;
-  private List<String> mobileList = new ArrayList<String>();
+  private List<String> mobileList = new ArrayList<>();
   private String message;
 
   public SmsGroup() {
